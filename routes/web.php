@@ -41,7 +41,6 @@ Route::group(['middleware' => ['auth', 'cekroleuser:admin, pelayan, kasir']], fu
 
     Route::get('/user-approve-print', 'UserController@user_approve_print')->name('user-approve-print');
 
-
     Route::get('user/active/{id}', "UserController@user_active")->name("user.active");
     Route::get('user/not-active/{id}', "UserController@user_not_active")->name("user.not-active");
 
@@ -51,10 +50,11 @@ Route::group(['middleware' => ['auth', 'cekroleuser:admin, pelayan, kasir']], fu
     Route::resource('menu-management', 'MenuController');
     Route::get('/menu-management-delete/{id}', 'MenuController@destroy')->name('menu-management-delete');
 
-    Route::resource('menu-management', 'MenuController');
-    Route::get('/menu-management-delete/{id}', 'MenuController@destroy')->name('menu-management-delete');
-
     Route::resource('table-management', 'TableController');
     Route::get('/table-management-delete/{id}', 'TableController@destroy')->name('table-management-delete');
+
+
+    Route::resource('booking-management', 'BookingController');
+    Route::post('/select-delete-bookingmng', 'BookingController@select_delete_bookingmng')->name('select-delete-bookingmng');
 });
 

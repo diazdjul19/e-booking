@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
     <title>E-Booking | Dashboard</title>
 
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/assets-admin/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/assets-admin/bower_components/font-awesome/css/font-awesome.min.css">
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> --}}
+    
     <!-- Ionicons -->
     <link rel="stylesheet" href="/assets-admin/bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
@@ -28,22 +28,22 @@
     <link rel="stylesheet" href="/assets-admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
     <!-- App favicon -->
-    {{-- <link rel="shortcut icon" href="/assets-eperform/jenjang_pendidikan/Logo-Ponpes-Redesign.png"> --}}
+    
 
     <!-- Summernote -->
-    {{-- <link href="/assets-admin/bower_components/summernote/summernote-bs4.css" rel="stylesheet"> --}}
+    
     
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
-    {{-- Lightbox --}}
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
 
     <!-- Select2 -->
     <link rel="stylesheet" href="/assets-admin/bower_components/select2/dist/css/select2.css">
 
     
-    {{-- Datetimepicker --}}
+    
     <link rel="stylesheet" type="text/css" href="/assets-eperform/datetimepicker-master/jquery.datetimepicker.css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -53,7 +53,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    @yield('style-css')
+    <?php echo $__env->yieldContent('style-css'); ?>
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -136,31 +136,32 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    @if (Auth::user()->foto_user == true)
-                        <img src="{{url('/storage/user/'.Auth::user()->foto_user)}}" class="user-image" alt="User Image">
-                    @else
+                    <?php if(Auth::user()->foto_user == true): ?>
+                        <img src="<?php echo e(url('/storage/user/'.Auth::user()->foto_user)); ?>" class="user-image" alt="User Image">
+                    <?php else: ?>
                         <img src="/assets-eperform/nopicture2.png" class="user-image" alt="User Image">
-                    @endif
-                    <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                    <?php endif; ?>
+                    <span class="hidden-xs"><?php echo e(Auth::user()->name); ?></span>
                     </a>
                     <ul class="dropdown-menu">
                     <!-- User image -->
                     <li class="user-header">
-                        @if (Auth::user()->foto_user == true)
-                            <img src="{{url('/storage/user/'.Auth::user()->foto_user)}}" class="img-circle" alt="User Image">
-                        @else
+                        <?php if(Auth::user()->foto_user == true): ?>
+                            <img src="<?php echo e(url('/storage/user/'.Auth::user()->foto_user)); ?>" class="img-circle" alt="User Image">
+                        <?php else: ?>
                             <img src="/assets-eperform/nopicture2.png" class="img-circle" alt="User Image">
-                        @endif
+                        <?php endif; ?>
 
                         <p>
-                        {{ Auth::user()->name }}
+                        <?php echo e(Auth::user()->name); ?>
+
                         
                         <small style="margin-top: 8px;">
-                            @if (Auth::user()->level == "A")
+                            <?php if(Auth::user()->level == "A"): ?>
                                 <span class="label label-primary" style="font-size: 12px;">Admin</span>                                  
-                            @elseif(Auth::user()->level == "O")
+                            <?php elseif(Auth::user()->level == "O"): ?>
                                 <span class="label label-info" style="font-size: 12px;">Operator</span>
-                            @endif
+                            <?php endif; ?>
                         </small>
                         </p>
                     </li>
@@ -178,17 +179,18 @@
                     <!-- Menu Footer-->
                     <li class="user-footer">
                         <div class="pull-left">
-                        <a href="{{route('edit-profil-password', Auth::user()->id)}}" class="btn btn-default btn-flat">Profil & Password</a>
+                        <a href="<?php echo e(route('edit-profil-password', Auth::user()->id)); ?>" class="btn btn-default btn-flat">Profil & Password</a>
                         </div>
                         <div class="pull-right">
-                            <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
+                            <a class="btn btn-default btn-flat" href="<?php echo e(route('logout')); ?>"
                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                <?php echo e(__('Logout')); ?>
+
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
+                            <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
+                                <?php echo csrf_field(); ?>
                             </form>
                         </div>
                     </li>
@@ -212,14 +214,14 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                @if (Auth::user()->foto_user == true)
-                    <img src="{{url('/storage/user/'.Auth::user()->foto_user)}}" class="img-circle" alt="User Image">
-                @else
+                <?php if(Auth::user()->foto_user == true): ?>
+                    <img src="<?php echo e(url('/storage/user/'.Auth::user()->foto_user)); ?>" class="img-circle" alt="User Image">
+                <?php else: ?>
                     <img src="/assets-eperform/nopicture2.png" class="img-circle" alt="User Image">
-                @endif
+                <?php endif; ?>
                 </div>
                 <div class="pull-left info">
-                <p>{{ Auth::user()->name }}</p>
+                <p><?php echo e(Auth::user()->name); ?></p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
@@ -237,10 +239,10 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
-                <li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{route('home')}}"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
+                <li class="<?php echo e(request()->is('home') ? 'active' : ''); ?>"><a href="<?php echo e(route('home')); ?>"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
                 
-                @if (Auth::user()->role == "admin")
-                    <li class="treeview {{ request()->is('user-registration', 'user-approved', 'user-rejected', 'user-editregistration/*', 'user-editapproved/*', 'user-editrejected/*') ? 'active' : '' }}">
+                <?php if(Auth::user()->role == "admin"): ?>
+                    <li class="treeview <?php echo e(request()->is('user-registration', 'user-approved', 'user-rejected', 'user-editregistration/*', 'user-editapproved/*', 'user-editrejected/*') ? 'active' : ''); ?>">
                         <a href="#">
                             <i class="fa fa-users"></i> <span> User Management</span>
                             <span class="pull-right-container">
@@ -248,36 +250,37 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="{{ request()->is('user-registration', 'user-editregistration/*') ? 'active' : '' }}">
-                                <a href="{{route('user-registration')}}">
+                            <li class="<?php echo e(request()->is('user-registration', 'user-editregistration/*') ? 'active' : ''); ?>">
+                                <a href="<?php echo e(route('user-registration')); ?>">
                                     <i class="fa fa-circle-o text-yellow"></i> User Registration
                                     <span class="pull-right-container">
                                         <small class="label pull-right bg-yellow">
-                                            {{ \App\User::all()->where('status', 'P')->count() }}
+                                            <?php echo e(\App\User::all()->where('status', 'P')->count()); ?>
+
                                         </small>
                                     </span>
                                 </a>
                             </li>
-                            <li class="{{ request()->is('user-approved', 'user-editapproved/*') ? 'active' : '' }}"><a href="{{route('user-approved')}}"><i class="fa fa-circle-o text-aqua"></i> User Approved</a></li>
-                            <li class="{{ request()->is('user-rejected', 'user-editrejected/*') ? 'active' : '' }}"><a href="{{route('user-rejected')}}"><i class="fa fa-circle-o text-red"></i> User Rejected</a></li>
+                            <li class="<?php echo e(request()->is('user-approved', 'user-editapproved/*') ? 'active' : ''); ?>"><a href="<?php echo e(route('user-approved')); ?>"><i class="fa fa-circle-o text-aqua"></i> User Approved</a></li>
+                            <li class="<?php echo e(request()->is('user-rejected', 'user-editrejected/*') ? 'active' : ''); ?>"><a href="<?php echo e(route('user-rejected')); ?>"><i class="fa fa-circle-o text-red"></i> User Rejected</a></li>
 
                         </ul>
                     </li>
-                @endif
+                <?php endif; ?>
 
-                <li class="{{ request()->is('menu-management') ? 'active' : '' }}">
-                    <a href="{{route('menu-management.index')}}">
+                <li class="<?php echo e(request()->is('menu-management') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('menu-management.index')); ?>">
                         <i class="fa fa-cutlery"></i> <span>Menu Management</span>
                     </a>
                 </li>
 
-                <li class="{{ request()->is('table-management') ? 'active' : '' }}">
-                    <a href="{{route('table-management.index')}}">
+                <li class="<?php echo e(request()->is('table-management') ? 'active' : ''); ?>">
+                    <a href="<?php echo e(route('table-management.index')); ?>">
                         <i class="fa fa-window-restore"></i> <span>Meja Management</span>
                     </a>
                 </li>
 
-                <li class="treeview {{ request()->is('booking-management') ? 'active' : '' }}">
+                <li class="treeview <?php echo e(request()->is('booking-management') ? 'active' : ''); ?>">
                     <a href="#">
                         <i class="fa fa-balance-scale"></i> <span> Action Management</span>
                         <span class="pull-right-container">
@@ -285,8 +288,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{{ request()->is('booking-management') ? 'active' : '' }}"><a href="{{route('booking-management.index')}}"><i class="fa fa-circle-o"></i> Booking Management</a></li>
-                        <li class="{{ request()->is('') ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o"></i> Payment Management</a></li>
+                        <li class="<?php echo e(request()->is('booking-management') ? 'active' : ''); ?>"><a href="<?php echo e(route('booking-management.index')); ?>"><i class="fa fa-circle-o"></i> Booking Management</a></li>
+                        <li class="<?php echo e(request()->is('') ? 'active' : ''); ?>"><a href="#"><i class="fa fa-circle-o"></i> Payment Management</a></li>
 
                     </ul>
                 </li>
@@ -301,7 +304,7 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content-->
-            @yield('content-wrapper')
+            <?php echo $__env->yieldContent('content-wrapper'); ?>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
@@ -312,8 +315,7 @@
                 <a target="_blank" class="" href=""><i class="fa fa-facebook-official" style="color:#3D4FFF" aria-hidden="true"></i></a>
                 <a target="_blank" class="" href=""><i  class="fa fa-instagram" style="color: #ff5396" aria-hidden="true"></i></a>
             </div>
-            {{-- <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-            reserved. --}}
+            
             
             <strong>Copyright &copy;<script>document.write(new Date().getFullYear())</script></strong> <a href="https://laravel.com/">Laravel</a> By <a href="https://diazdjul19.github.io/">Diaz Djuliansyah</a>
         </footer>
@@ -322,13 +324,13 @@
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Create the tabs -->
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            @if (Auth::user()->level == 'A')
+            <?php if(Auth::user()->level == 'A'): ?>
                 <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
 
                 <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-            @elseif(Auth::user()->level == 'O')
-                {{-- KOSONG --}}
-            @endif
+            <?php elseif(Auth::user()->level == 'O'): ?>
+                
+            <?php endif; ?>
             
             </ul>
             <!-- Tab panes -->
@@ -535,17 +537,17 @@
         <!-- AdminLTE for demo purposes -->
         <script src="/assets-admin/dist/js/demo.js"></script>
         <!-- Summernote -->
-        {{-- <script src="/assets-admin/bower_components/summernote/summernote-bs4.min.js"></script> --}}
+        
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-        {{-- Lightbox --}}
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
         <!-- DataTables -->
         <script src="/assets-admin/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="/assets-admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
         <!-- Select2 -->
         <script src="/assets-admin/bower_components/select2/dist/js/select2.full.min.js"></script>
-        {{-- DatetimePicker --}}
-        {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> --}}
+        
+        
         <script src="/assets-eperform/datetimepicker-master/jquery.datetimepicker.js"></script>
         <script src="/assets-eperform/datetimepicker-master/build/jquery.datetimepicker.full.js"></script>    
 
@@ -568,14 +570,15 @@
             setInterval(refreshTime, 1000);
         </script>
 
-    @include('sweetalert::alert')
-    @stack('datatable')
-    @stack('checkall')
-    @stack('show-hide-password')
-    @stack('lightbox')
-    @stack('confirm-alert')
-    @stack('input-rupiah')
-    @stack('multiple-input')
+    <?php echo $__env->make('sweetalert::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->yieldPushContent('datatable'); ?>
+    <?php echo $__env->yieldPushContent('checkall'); ?>
+    <?php echo $__env->yieldPushContent('show-hide-password'); ?>
+    <?php echo $__env->yieldPushContent('lightbox'); ?>
+    <?php echo $__env->yieldPushContent('confirm-alert'); ?>
+    <?php echo $__env->yieldPushContent('input-rupiah'); ?>
+    <?php echo $__env->yieldPushContent('multiple-input'); ?>
 
     </body>
 </html>
+<?php /**PATH C:\laragon\www\e-booking\resources\views/layouts/master_dashboard.blade.php ENDPATH**/ ?>
