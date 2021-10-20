@@ -263,21 +263,21 @@
 
                         </ul>
                     </li>
+                
+                    <li class="{{ request()->is('menu-management') ? 'active' : '' }}">
+                        <a href="{{route('menu-management.index')}}">
+                            <i class="fa fa-cutlery"></i> <span>Menu Management</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ request()->is('table-management') ? 'active' : '' }}">
+                        <a href="{{route('table-management.index')}}">
+                            <i class="fa fa-window-restore"></i> <span>Meja Management</span>
+                        </a>
+                    </li>
                 @endif
 
-                <li class="{{ request()->is('menu-management') ? 'active' : '' }}">
-                    <a href="{{route('menu-management.index')}}">
-                        <i class="fa fa-cutlery"></i> <span>Menu Management</span>
-                    </a>
-                </li>
-
-                <li class="{{ request()->is('table-management') ? 'active' : '' }}">
-                    <a href="{{route('table-management.index')}}">
-                        <i class="fa fa-window-restore"></i> <span>Meja Management</span>
-                    </a>
-                </li>
-
-                <li class="treeview {{ request()->is('booking-management') ? 'active' : '' }}">
+                <li class="treeview {{ request()->is('booking-management', 'booking-management/*') ? 'active' : '' }}">
                     <a href="#">
                         <i class="fa fa-balance-scale"></i> <span> Action Management</span>
                         <span class="pull-right-container">
@@ -285,8 +285,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{{ request()->is('booking-management') ? 'active' : '' }}"><a href="{{route('booking-management.index')}}"><i class="fa fa-circle-o"></i> Booking Management</a></li>
-                        <li class="{{ request()->is('') ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o"></i> Payment Management</a></li>
+                        <li class="{{ request()->is('booking-management', 'booking-management/*') ? 'active' : '' }}"><a href="{{route('booking-management.index')}}"><i class="fa fa-circle-o"></i> Booking Management</a></li>
+                        {{-- <li class="{{ request()->is('') ? 'active' : '' }}"><a href="#"><i class="fa fa-circle-o"></i> Payment Management</a></li> --}}
 
                     </ul>
                 </li>
@@ -322,13 +322,11 @@
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Create the tabs -->
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            @if (Auth::user()->level == 'A')
-                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
 
-                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-            @elseif(Auth::user()->level == 'O')
-                {{-- KOSONG --}}
-            @endif
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        
             
             </ul>
             <!-- Tab panes -->
@@ -575,6 +573,7 @@
     @stack('lightbox')
     @stack('confirm-alert')
     @stack('input-rupiah')
+    @stack('show-hide-input')
     @stack('multiple-input')
 
     </body>

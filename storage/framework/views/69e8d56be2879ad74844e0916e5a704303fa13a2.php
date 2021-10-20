@@ -14,7 +14,7 @@
                 <?php endif; ?>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> E-Perform</a></li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> E-Booking</a></li>
                 <li><a href="#">User Management</a></li>
 
                 <?php if(request()->is('user-registration')): ?>

@@ -109,7 +109,7 @@ class BookingController extends Controller
             
             // \DB::commit() ini akan menginput data jika dari proses diatas tidak ada yg salah atau error.
             \DB::commit();
-            alert()->success('Success Created',"Successfully Created Data : ");
+            alert()->success('Success Created',"Successfully Created Data : $data->number_order");
             return redirect(route('booking-management.index'));
 
         } catch (\Exception $e) {
@@ -138,7 +138,24 @@ class BookingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = MsBooking::with('jnstable')->find($id);
+        $get_dataorder = MsBookingOrder::where('rendome_booking_order', $data->rendome_booking_rel)->get();
+
+        $data_table = MsTable::where('status_table', 'Ready')->get();
+
+        $data_makanan = MsMenu::where([
+            ['type_menu','=','MAKANAN'],
+            ['status_menu','=', 'Ready']
+        ])->get();
+
+        $data_minuman = MsMenu::where([
+            ['type_menu','=','MINUMAN'],
+            ['status_menu','=', 'Ready']
+        ])->get();
+
+
+        return view('dashboard_view.booking_management.booking_edit', compact('data', 'get_dataorder', 'data_table', 'data_makanan', 'data_minuman'));
+        
     }
 
     /**
@@ -150,7 +167,67 @@ class BookingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            // '' => ['required', 'string', 'max:255'],
+            // '' => ['required', 'string', 'max:255'],
+        ]);
+
+        try {
+
+            \DB::beginTransaction();
+
+            $data = MsBooking::find($id);
+
+            if (isset($request->ned_ed_mo)) {
+                if ($request->ned_ed_mo == "EMO") {
+                    $get_rendome_booking_rel = $data->rendome_booking_rel;
+                    $delete_old_bo = MsBookingOrder::where('rendome_booking_order', $get_rendome_booking_rel)->delete();
+
+                    // Start Proses untuk create Menu Pemesanan ke database
+                        $rendome_booking_order = Str::random(10);
+                        $name_menu_order = $request->menu;
+                        $name_qty_order = $request->qty;
+                        $price_order = "0";
+
+                        for ($i=0; $i < count($name_menu_order); $i++) { 
+                            $datasave = [
+                                'rendome_booking_order' => $rendome_booking_order,
+                                'name_menu_order' => $name_menu_order[$i],
+                                'name_qty_order' => $name_qty_order[$i],
+                                'price_order' => $price_order
+
+                            ];
+                            \DB::table('ms_booking_orders')->insert($datasave);
+                        }
+                    // End Proses untuk create Menu Pemesanan ke database
+                }
+            }
+
+            $data->number_order = $request->get('number_order');
+            $data->number_table_rel = $request->get('number_table_rel');
+
+            if (isset($request->ned_ed_mo)) {
+                if ($request->ned_ed_mo == "EMO") {
+                    $data->rendome_booking_rel = $rendome_booking_order;
+                }
+            }
+
+            $data->save();
+
+            
+
+
+            
+            // \DB::commit() ini akan menginput data jika dari proses diatas tidak ada yg salah atau error.
+            \DB::commit();
+            alert()->success('Success Updated',"Successfully Updated Data : $data->number_order");
+            return redirect(route('booking-management.index'));
+
+        } catch (\Exception $e) {
+            \DB::rollback();
+            alert()->error('Error',$e->getMessage());
+            return redirect(route('booking-management.index'));
+        }
     }
 
     /**
@@ -163,4 +240,26 @@ class BookingController extends Controller
     {
         //
     }
+
+    public function select_delete_bookingmng(Request $request)
+    {
+        $select_delete = $request->get('select_delete');
+        
+        if ($select_delete == true) {
+
+            $data_confirm = MsBooking::whereIn('id', $select_delete)->get('id');
+
+            if ($data_confirm == true) {
+                $delete_now = MsBooking::whereIn('id', $data_confirm)->delete();
+            } else {
+                return "Gagal Menghapus Data :(";
+            }
+
+            alert()->info('Success Delete',"Data Berhasil Di Hapus");
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
+    }
+
 }

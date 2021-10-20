@@ -1,5 +1,5 @@
-@extends('layouts.master_dashboard')
-@section('content-wrapper')
+
+<?php $__env->startSection('content-wrapper'); ?>
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -18,7 +18,7 @@
     
         <section class="content">
 
-            {{-- Start Modal Create --}}
+            
             <div class="modal fade" id="modal-create">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -28,8 +28,8 @@
                             <h4 class="modal-title"><i class="fa fa-comments-o" aria-hidden="true"></i> Tambah Pesanan Baru</h4>
                         </div>
 
-                        <form action="{{route('booking-management.store')}}" method="post" enctype="multipart/form-data">
-                            @csrf
+                        <form action="<?php echo e(route('booking-management.store')); ?>" method="post" enctype="multipart/form-data">
+                            <?php echo csrf_field(); ?>
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -37,7 +37,7 @@
                                             <label class="col-md-4 col-form-label" for="number_order"><h6 style="color: black; font-weight:bold;font-size:13px;">Nomor Pemesanan <span style="color: red;">*</span></h6></label>
                                             
                                             <div class="col-md-8">
-                                                <input id="number_order" name="number_order" type="text" class="form-control" required autocomplete="off" placeholder="" autofocus readonly value="{{$tiket_autogenerate}}">
+                                                <input id="number_order" name="number_order" type="text" class="form-control" required autocomplete="off" placeholder="" autofocus readonly value="<?php echo e($tiket_autogenerate); ?>">
                                             </div>
                             
                                         </div>
@@ -48,9 +48,9 @@
                                             <div class="col-md-8">
                                                 <select class="form-control pt-0 pb-0" id="number_table_rel" name="number_table_rel" style="height:30px;">
                                                     <option value selected disabled>Choise</option>
-                                                    @foreach ($data_table as $item)
-                                                        <option value="{{$item->id}}">{{$item->number_table}}</option>
-                                                    @endforeach
+                                                    <?php $__currentLoopData = $data_table; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->number_table); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -63,14 +63,14 @@
                                                     <select class="form-control pt-0 pb-0" id="" name="menu[]" style="height:30px;">
                                                         <option value selected disabled>Choise</option>
                                                             <optgroup label="Menu Makanan">
-                                                                @foreach ($data_makanan as $item)
-                                                                    <option value="{{$item->name_menu}}">{{$item->name_menu}}</option>  
-                                                                @endforeach
+                                                                <?php $__currentLoopData = $data_makanan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                    <option value="<?php echo e($item->name_menu); ?>"><?php echo e($item->name_menu); ?></option>  
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                             </optgroup>
                                                             <optgroup label="Menu Minuman">
-                                                                @foreach ($data_minuman as $item)
-                                                                    <option value="{{$item->name_menu}}">{{$item->name_menu}}</option>  
-                                                                @endforeach
+                                                                <?php $__currentLoopData = $data_minuman; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                    <option value="<?php echo e($item->name_menu); ?>"><?php echo e($item->name_menu); ?></option>  
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                             </optgroup>
                                                     </select>
 
@@ -99,14 +99,14 @@
                                     <select class="form-control pt-0 pb-0" id="" name="menu[]" style="height:30px;">
                                         <option value selected disabled>Choise</option>
                                             <optgroup label="Menu Makanan">
-                                                @foreach ($data_makanan as $item)
-                                                    <option value="{{$item->name_menu}}">{{$item->name_menu}}</option>  
-                                                @endforeach
+                                                <?php $__currentLoopData = $data_makanan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($item->name_menu); ?>"><?php echo e($item->name_menu); ?></option>  
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </optgroup>
                                             <optgroup label="Menu Minuman">
-                                                @foreach ($data_minuman as $item)
-                                                    <option value="{{$item->name_menu}}">{{$item->name_menu}}</option>  
-                                                @endforeach
+                                                <?php $__currentLoopData = $data_minuman; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($item->name_menu); ?>"><?php echo e($item->name_menu); ?></option>  
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </optgroup>
                                     </select>
 
@@ -124,12 +124,12 @@
                 </div>
                 <!-- /.modal-dialog -->
             </div>
-            {{-- End Modal Create --}}
+            
 
             <!-- Default box -->
             <div class="box box-success">
-                <form action="{{route('select-delete-bookingmng')}}" method="post" >
-                    @csrf
+                <form action="<?php echo e(route('select-delete-bookingmng')); ?>" method="post" >
+                    <?php echo csrf_field(); ?>
                     <div class="box-header with-border">
                         <h3 class="box-title">Table Booking Management</h3>
         
@@ -167,31 +167,32 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach ($data as $d)
+                                    <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td style="min-width:120px;"><a href="{{route('booking-management.edit', $d->id)}}" style="color: #17a2b8;text-decoration:none;" data-toggle="tooltip" title="Click here to view or edit data" data-placement="top">{{$d->number_order}}</a></td>
+                                            <td><?php echo e($loop->iteration); ?></td>
+                                            <td style="min-width:120px;"><a href="<?php echo e(route('booking-management.edit', $d->id)); ?>" style="color: #17a2b8;text-decoration:none;" data-toggle="tooltip" title="Click here to view or edit data" data-placement="top"><?php echo e($d->number_order); ?></a></td>
                                             
-                                            @if ($d->jnstable != null)
+                                            <?php if($d->jnstable != null): ?>
                                                 <td style="min-width:120px;text-align:center;">
-                                                    {{$d->jnstable->number_table}}
+                                                    <?php echo e($d->jnstable->number_table); ?>
+
                                                 </td>
-                                            @elseif ($d->jnstable == null) 
+                                            <?php elseif($d->jnstable == null): ?> 
                                                 <td style="min-width:120px;text-align:center;font-weight:bold;">ID Not Found !!!</td>
-                                            @endif
+                                            <?php endif; ?>
 
                                             <td class="text-center">
-                                                @if ($d->status_order == "Open")
+                                                <?php if($d->status_order == "Open"): ?>
                                                     <span class="label label-info">Open</span>
-                                                @elseif ($d->status_order == "Close")
+                                                <?php elseif($d->status_order == "Close"): ?>
                                                     <span class="label label-primary">Cloce</span>
-                                                @endif
+                                                <?php endif; ?>
                                             </td>
 
-                                            <td class="text-center"><input type="checkbox" name="select_delete[]" value="{{$d->id}}"></td>
+                                            <td class="text-center"><input type="checkbox" name="select_delete[]" value="<?php echo e($d->id); ?>"></td>
 
                                         </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                                 
                             </table>
@@ -203,17 +204,17 @@
             </div>
             <!-- /.box -->
         </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('datatable')
+<?php $__env->startPush('datatable'); ?>
     <script>
         $(function () {
             $('#example1').DataTable()
         })
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@push('checkall')
+<?php $__env->startPush('checkall'); ?>
     <script>
         $(document).ready(function() {
             $('#cekall').click(function () {
@@ -222,9 +223,9 @@
         } );
         
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@push('confirm-alert')
+<?php $__env->startPush('confirm-alert'); ?>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script>
@@ -260,9 +261,9 @@
             });
         // End Confirm Select Delete Using SweetAlert2
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@push('multiple-input')
+<?php $__env->startPush('multiple-input'); ?>
     <script>
         $(document).ready(function(){
         // membatasi jumlah inputan
@@ -284,4 +285,5 @@
         });
         });
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.master_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\E-Booking\resources\views/dashboard_view/booking_management/booking.blade.php ENDPATH**/ ?>

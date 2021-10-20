@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth', 'cekroleuser:admin, pelayan, kasir']], function () {
+Route::group(['middleware' => ['auth', 'cekroleuser:admin,pelayan,kasir']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('/mngr-store', 'HomeController@mngr_store')->name('mngr-store');
     Route::put('/mngr-update/{id}', 'HomeController@mngr_update')->name('mngr-update');

@@ -53,7 +53,7 @@ class TableController extends Controller
             $data->save();
             // \DB::commit() ini akan menginput data jika dari proses diatas tidak ada yg salah atau error.
             \DB::commit();
-            alert()->success('Success Created',"Successfully Created Data : $data->name_vendor");
+            alert()->success('Success Created',"Successfully Created Data : $data->number_table");
             return redirect(route('table-management.index'));
 
         } catch (\Exception $e) {

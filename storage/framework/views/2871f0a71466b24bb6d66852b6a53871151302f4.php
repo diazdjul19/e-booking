@@ -8,7 +8,7 @@
             <small>...</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="<?php echo e(route('home')); ?>"><i class="fa fa-dashboard"></i> E-Perform</a></li>
+            <li><a href="<?php echo e(route('home')); ?>"><i class="fa fa-dashboard"></i> E-Booking</a></li>
             <li><a href="<?php echo e(route('home')); ?>">User Management</a></li>
             <?php if(request()->is('user-editregistration/*')): ?>
                 <li><a href="<?php echo e(route('user-registration')); ?>">User Registration </a></li>

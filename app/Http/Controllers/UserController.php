@@ -54,7 +54,7 @@ class UserController extends Controller
             $data->email = $request->email;
             $data->password = Hash::make($request->password);
             $data->role = $request->role;
-            $data->foto_user = $request->foto_user;
+            // $data->foto_user = $request->foto_user;
             $data->status = "P";
 
             if (isset($request->foto_user)) {
@@ -64,12 +64,6 @@ class UserController extends Controller
                 $data->foto_user = $imageFile;
             }
 
-            if (isset($request->foto_ktp)) {
-                $imageFile = $request->name . '/' . \Str::random(60) . '.' . $request->foto_ktp->getClientOriginalExtension();
-                $image_path = $request->file('foto_ktp')->move(storage_path('app/public/foto_ktp/' . $request->name), $imageFile);
-
-                $data->foto_ktp = $imageFile;
-            }
             $data->save();
 
             // \DB::commit() ini akan menginput data jika dari proses diatas tidak ada yg salah atau error.
