@@ -266,21 +266,21 @@
 
                         </ul>
                     </li>
+                
+                    <li class="<?php echo e(request()->is('menu-management') ? 'active' : ''); ?>">
+                        <a href="<?php echo e(route('menu-management.index')); ?>">
+                            <i class="fa fa-cutlery"></i> <span>Menu Management</span>
+                        </a>
+                    </li>
+
+                    <li class="<?php echo e(request()->is('table-management') ? 'active' : ''); ?>">
+                        <a href="<?php echo e(route('table-management.index')); ?>">
+                            <i class="fa fa-window-restore"></i> <span>Meja Management</span>
+                        </a>
+                    </li>
                 <?php endif; ?>
 
-                <li class="<?php echo e(request()->is('menu-management') ? 'active' : ''); ?>">
-                    <a href="<?php echo e(route('menu-management.index')); ?>">
-                        <i class="fa fa-cutlery"></i> <span>Menu Management</span>
-                    </a>
-                </li>
-
-                <li class="<?php echo e(request()->is('table-management') ? 'active' : ''); ?>">
-                    <a href="<?php echo e(route('table-management.index')); ?>">
-                        <i class="fa fa-window-restore"></i> <span>Meja Management</span>
-                    </a>
-                </li>
-
-                <li class="treeview <?php echo e(request()->is('booking-management') ? 'active' : ''); ?>">
+                <li class="treeview <?php echo e(request()->is('booking-management', 'booking-management/*') ? 'active' : ''); ?>">
                     <a href="#">
                         <i class="fa fa-balance-scale"></i> <span> Action Management</span>
                         <span class="pull-right-container">
@@ -288,8 +288,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="<?php echo e(request()->is('booking-management') ? 'active' : ''); ?>"><a href="<?php echo e(route('booking-management.index')); ?>"><i class="fa fa-circle-o"></i> Booking Management</a></li>
-                        <li class="<?php echo e(request()->is('') ? 'active' : ''); ?>"><a href="#"><i class="fa fa-circle-o"></i> Payment Management</a></li>
+                        <li class="<?php echo e(request()->is('booking-management', 'booking-management/*') ? 'active' : ''); ?>"><a href="<?php echo e(route('booking-management.index')); ?>"><i class="fa fa-circle-o"></i> Booking Management</a></li>
+                        
 
                     </ul>
                 </li>
@@ -324,13 +324,11 @@
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Create the tabs -->
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <?php if(Auth::user()->level == 'A'): ?>
-                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-
-                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-            <?php elseif(Auth::user()->level == 'O'): ?>
                 
-            <?php endif; ?>
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        
             
             </ul>
             <!-- Tab panes -->
@@ -577,6 +575,7 @@
     <?php echo $__env->yieldPushContent('lightbox'); ?>
     <?php echo $__env->yieldPushContent('confirm-alert'); ?>
     <?php echo $__env->yieldPushContent('input-rupiah'); ?>
+    <?php echo $__env->yieldPushContent('show-hide-input'); ?>
     <?php echo $__env->yieldPushContent('multiple-input'); ?>
 
     </body>

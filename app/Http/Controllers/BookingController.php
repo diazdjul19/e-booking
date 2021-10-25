@@ -205,6 +205,8 @@ class BookingController extends Controller
 
             $data->number_order = $request->get('number_order');
             $data->number_table_rel = $request->get('number_table_rel');
+            $data->status_order = $request->get('status_order');
+
 
             if (isset($request->ned_ed_mo)) {
                 if ($request->ned_ed_mo == "EMO") {
@@ -260,6 +262,16 @@ class BookingController extends Controller
         } else {
             return redirect()->back();
         }
+    }
+
+    public function pdf_booking_edit($id)
+    {
+        $data = MsBooking::with('jnstable')->find($id);
+        $get_dataorder = MsBookingOrder::where('rendome_booking_order', $data->rendome_booking_rel)->get();
+
+        $pdf = \PDF::loadView('pdf.pdf_struk_paper', compact('data', 'get_dataorder'))->setPaper('A4');
+        return $pdf->download("StrukPaper.pdf");
+
     }
 
 }

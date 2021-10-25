@@ -40,7 +40,7 @@
                                         </div>
 
                                         <div class="form-group row" style="margin:0px;">
-                                            <label class="col-md-4 col-form-label" for="status_table"><h6 style="color: black; font-weight:bold;font-size:13px;">Jenis Menu<span style="color: red;">*</span></h6></label>
+                                            <label class="col-md-4 col-form-label" for="status_table"><h6 style="color: black; font-weight:bold;font-size:13px;">Status Menu<span style="color: red;">*</span></h6></label>
                                             
                                             <div class="col-md-8">
                                                 <select class="form-control pt-0 pb-0" id="status_table" name="status_table" style="height:30px;">

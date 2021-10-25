@@ -56,5 +56,8 @@ Route::group(['middleware' => ['auth', 'cekroleuser:admin,pelayan,kasir']], func
 
     Route::resource('booking-management', 'BookingController');
     Route::post('/select-delete-bookingmng', 'BookingController@select_delete_bookingmng')->name('select-delete-bookingmng');
+
+    Route::get('/pdf-booking/{id}', 'BookingController@pdf_booking')->name('pdf-booking');
+    Route::get('/pdf-booking-edit/{id}', 'BookingController@pdf_booking_edit')->name('pdf-booking-edit');
 });
 

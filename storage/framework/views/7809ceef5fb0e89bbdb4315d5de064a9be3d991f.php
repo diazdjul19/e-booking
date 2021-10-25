@@ -1,5 +1,5 @@
-@extends('layouts.master_dashboard')
-@section('content-wrapper')
+
+<?php $__env->startSection('content-wrapper'); ?>
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -8,9 +8,9 @@
             <small>...</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{route('home')}}"><i class="fa fa-dashboard"></i> E-Booking</a></li>
-            <li><a href="{{ URL::previous() }}">Action Management</a></li>
-            <li><a href="{{ URL::previous() }}">Booking Management</a></li>
+            <li><a href="<?php echo e(route('home')); ?>"><i class="fa fa-dashboard"></i> E-Booking</a></li>
+            <li><a href="<?php echo e(URL::previous()); ?>">Action Management</a></li>
+            <li><a href="<?php echo e(URL::previous()); ?>">Booking Management</a></li>
             <li class="active">Edit Pesanan</li>
         </ol>
         
@@ -32,9 +32,10 @@
                 </div>
             </div>
 
-            <form class="form-sample" action="{{route('booking-management.update', $data->id)}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                {{method_field('put')}}
+            <form class="form-sample" action="<?php echo e(route('booking-management.update', $data->id)); ?>" method="POST" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
+                <?php echo e(method_field('put')); ?>
+
 
                 <div class="row">
                     <div class="col-md-8">
@@ -43,7 +44,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="" for="">Nomor Pesanan <span class="text-danger">*</span></label>
-                                        <input id="number_order" type="text" class="form-control" name="number_order" autocomplete="off" required readonly value="{{$data->number_order}}">
+                                        <input id="number_order" type="text" class="form-control" name="number_order" autocomplete="off" required readonly value="<?php echo e($data->number_order); ?>">
                                     </div>
                                 </div>
         
@@ -52,18 +53,19 @@
                                         <label class="" for="">Nomor Meja <span class="text-danger">*</span></label>
                                         <select class="form-control" style="width: 100%;" name="number_table_rel" required>
                                             <optgroup label="Data Meja Lama">
-                                                @if ($data->jnstable == null)
+                                                <?php if($data->jnstable == null): ?>
                                                     <option  value="">ID Not Found !!!</option>
-                                                @elseif ($data->jnstable != null) 
-                                                    <option  value="{{$data->jnstable->id}}">{{$data->jnstable->number_table}}</option>
-                                                @endif
+                                                <?php elseif($data->jnstable != null): ?> 
+                                                    <option  value="<?php echo e($data->jnstable->id); ?>"><?php echo e($data->jnstable->number_table); ?></option>
+                                                <?php endif; ?>
                                             </optgroup>  
                                             <optgroup label="Data Site Baru">  
-                                                @foreach ($data_table as $item)
-                                                    <option value="{{$item->id}}">
-                                                        {{$item->number_table}}
+                                                <?php $__currentLoopData = $data_table; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($item->id); ?>">
+                                                        <?php echo e($item->number_table); ?>
+
                                                     </option>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </optgroup>
                                         </select> 
                                     </div>
@@ -76,19 +78,19 @@
                                         <label class="" for="">Status Order </label>
                                             <select class="form-control pt-0 pb-0" id="status" name="status_order" style="height:35px;" required>
                                                 <optgroup label="Status Saat Ini">
-                                                    @if ($data->status_order == "Open")
-                                                        <option style="background-color: aqua;color:#FFF;" value="{{$data->status_order}}">&#9201;&#65039; Open</option>
-                                                    @elseif ($data->status_order == "Close")
-                                                        <option style="background-color: blue;color:#FFF;" value="{{$data->status_order}}">&#10004; Close</option>
-                                                    @endif
+                                                    <?php if($data->status_order == "Open"): ?>
+                                                        <option style="background-color: aqua;color:#FFF;" value="<?php echo e($data->status_order); ?>">&#9201;&#65039; Open</option>
+                                                    <?php elseif($data->status_order == "Close"): ?>
+                                                        <option style="background-color: blue;color:#FFF;" value="<?php echo e($data->status_order); ?>">&#10004; Close</option>
+                                                    <?php endif; ?>
                                                 </optgroup>
 
-                                                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'kasir')
+                                                <?php if(Auth::user()->role == 'admin' || Auth::user()->role == 'kasir'): ?>
                                                     <optgroup label="Status Baru">
                                                         <option style="background-color: aqua;color:#FFF;" value="Open">&#9201;&#65039; Open</option>
                                                         <option style="background-color: blue;color:#FFF;" value="Close">&#10004; Close</option>
                                                     </optgroup>
-                                                @endif
+                                                <?php endif; ?>
                                             </select>
                                     </div>
                                 </div>
@@ -113,14 +115,14 @@
                                         <select class="form-control pt-0 pb-0" id="showhide_one" name="menu[]" style="height:30px;">
                                             <option value selected disabled>Choise</option>
                                                 <optgroup label="Menu Makanan">
-                                                    @foreach ($data_makanan as $item)
-                                                        <option value="{{$item->name_menu}}">{{$item->name_menu}}</option>  
-                                                    @endforeach
+                                                    <?php $__currentLoopData = $data_makanan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($item->name_menu); ?>"><?php echo e($item->name_menu); ?></option>  
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </optgroup>
                                                 <optgroup label="Menu Minuman">
-                                                    @foreach ($data_minuman as $item)
-                                                        <option value="{{$item->name_menu}}">{{$item->name_menu}}</option>  
-                                                    @endforeach
+                                                    <?php $__currentLoopData = $data_minuman; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($item->name_menu); ?>"><?php echo e($item->name_menu); ?></option>  
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </optgroup>
                                         </select>
 
@@ -145,13 +147,13 @@
                                             <th>Name Menu</th>
                                             <th class="text-center">Qty</th>
                                         </tr>
-                                        @foreach ($get_dataorder as $item)
+                                        <?php $__currentLoopData = $get_dataorder; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-                                                <td>{{$loop->iteration}}</td>
-                                                <td>{{$item->name_menu_order}}</td>
-                                                <td class="text-center">{{$item->name_qty_order}}</td> 
+                                                <td><?php echo e($loop->iteration); ?></td>
+                                                <td><?php echo e($item->name_menu_order); ?></td>
+                                                <td class="text-center"><?php echo e($item->name_qty_order); ?></td> 
                                             </tr>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </table>
                                 </div>
                             </div>
@@ -165,10 +167,10 @@
 
                 <!-- /.box-footer -->
                 <div class="box-footer">
-                    <a href="{{ URL::previous() }}" class="btn btn-warning" ><i class="fa  fa-arrow-circle-left"></i> Back</a>
+                    <a href="<?php echo e(URL::previous()); ?>" class="btn btn-warning" ><i class="fa  fa-arrow-circle-left"></i> Back</a>
                     <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Save</button>
 
-                    <a href="{{route('pdf-booking-edit', $data->id)}}"  class="btn btn-sm btn-danger" style="float: right; margin-left:2px; margin-right:2px;"><i class="fa fa-file-pdf-o"></i> Download PDF</a>
+                    <a href="<?php echo e(route('pdf-booking-edit', $data->id)); ?>"  class="btn btn-sm btn-danger" style="float: right; margin-left:2px; margin-right:2px;"><i class="fa fa-file-pdf-o"></i> Download PDF</a>
                 </div>
             </form>
 
@@ -182,14 +184,14 @@
                             <select class="form-control pt-0 pb-0" id="showhide_two" name="menu[]" style="height:30px;">
                                 <option value selected disabled>Choise</option>
                                     <optgroup label="Menu Makanan">
-                                        @foreach ($data_makanan as $item)
-                                            <option value="{{$item->name_menu}}">{{$item->name_menu}}</option>  
-                                        @endforeach
+                                        <?php $__currentLoopData = $data_makanan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($item->name_menu); ?>"><?php echo e($item->name_menu); ?></option>  
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </optgroup>
                                     <optgroup label="Menu Minuman">
-                                        @foreach ($data_minuman as $item)
-                                            <option value="{{$item->name_menu}}">{{$item->name_menu}}</option>  
-                                        @endforeach
+                                        <?php $__currentLoopData = $data_minuman; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($item->name_menu); ?>"><?php echo e($item->name_menu); ?></option>  
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </optgroup>
                             </select>
     
@@ -209,9 +211,9 @@
 
 
     
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('show-hide-input')
+<?php $__env->startPush('show-hide-input'); ?>
     <script>
         $("#ned_ed_mo").change(function() {
             if ($(this).val() == "EMO") {
@@ -231,9 +233,9 @@
         });
         $("#ned_ed_mo").trigger("change");
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@push('multiple-input')
+<?php $__env->startPush('multiple-input'); ?>
     <script>
         $(document).ready(function(){
         // membatasi jumlah inputan
@@ -255,5 +257,7 @@
         });
         });
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
+
+<?php echo $__env->make('layouts.master_dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\e-booking\resources\views/dashboard_view/booking_management/booking_edit.blade.php ENDPATH**/ ?>

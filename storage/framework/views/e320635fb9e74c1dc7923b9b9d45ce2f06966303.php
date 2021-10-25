@@ -161,7 +161,6 @@
                                         <th>No</th>
                                         <th>No Pemesanan</th>
                                         <th class="text-center">No Meja</th>
-                                        <th class="text-center">Data Pemesanan</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center" style="padding:5px; min-width:80px;">&#128073; <input type="checkbox" id="cekall" style="margin-bottom: 10px;"  data-toggle="tooltip" title="Click here to Check All" data-placement="top"> &#128072;</th>
                                     </tr>
@@ -171,7 +170,8 @@
                                     <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
                                             <td><?php echo e($loop->iteration); ?></td>
-                                            <td style="min-width:120px;"><?php echo e($d->number_order); ?></td>
+                                            <td style="min-width:120px;"><a href="<?php echo e(route('booking-management.edit', $d->id)); ?>" style="color: #17a2b8;text-decoration:none;" data-toggle="tooltip" title="Click here to view or edit data" data-placement="top"><?php echo e($d->number_order); ?></a></td>
+                                            
                                             <?php if($d->jnstable != null): ?>
                                                 <td style="min-width:120px;text-align:center;">
                                                     <?php echo e($d->jnstable->number_table); ?>
@@ -181,22 +181,15 @@
                                                 <td style="min-width:120px;text-align:center;font-weight:bold;">ID Not Found !!!</td>
                                             <?php endif; ?>
 
-                                            
-                                               
-                                            <span >
-                                                <?php $booking_order = app('App\Models\MsBookingOrder'); ?>
-                                                <?php echo e($booking_order->where('rendome_booking_order', $d->rendome_booking_rel)->get('name_menu_order')); ?>
-
-                                                <?php echo e(str_replace('[{"', "", $booking_order)); ?>
-
-                                                
-                                            </span>
-                                            
-                                            <td style="min-width:120px;" style="padding-top: 15px;" class="text-center">
-                                                <a href="#" id="open-modal" class="btn btn-success btn-xs"  style="margin: 3px;"><i class="fa fa-edit"></i> Edit</a>
-                                                <a href="<?php echo e(route('table-management-delete', $d->id)); ?>" id="" class="delete-alert btn btn-danger btn-xs"  style="margin: 3px;"><i class="fa fa-trash"></i> Delete</a>
+                                            <td class="text-center">
+                                                <?php if($d->status_order == "Open"): ?>
+                                                    <span class="label label-info">Open</span>
+                                                <?php elseif($d->status_order == "Close"): ?>
+                                                    <span class="label label-primary">Cloce</span>
+                                                <?php endif; ?>
                                             </td>
-                                            <td style="display:none;"><?php echo e($d->id); ?></td>
+
+                                            <td class="text-center"><input type="checkbox" name="select_delete[]" value="<?php echo e($d->id); ?>"></td>
 
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
